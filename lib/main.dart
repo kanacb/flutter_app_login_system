@@ -6,7 +6,7 @@ import 'package:login_system/login/loginPage.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   Box<dynamic> settings = await Hive.openBox('settings');
-
+  print('main function');
   if (settings.isNotEmpty) {
     runApp(const MyApp());
   } else {
@@ -36,8 +36,10 @@ class MyLoginApp extends StatefulWidget {
 }
 
 class _MyLoginAppState extends State<MyLoginApp> {
+
   @override
   Widget build(BuildContext context) {
+    print('_MyLoginAppState');
     return const MaterialApp(home: LoginPage());
   }
 }

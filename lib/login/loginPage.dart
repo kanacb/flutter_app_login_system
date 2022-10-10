@@ -16,16 +16,20 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return loginWidget();
   }
 
-  Widget LoginWidget() {
+  Widget loginWidget() {
     return Scaffold(
+      appBar: AppBar(title: const Text("Login Page"),),
       body: Center(
         child: Form(
           key: formKey,
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               buildEmailController(),
               const SizedBox(
                 height: 10,
@@ -47,6 +51,9 @@ class _LoginPageState extends State<LoginPage> {
       controller: email,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+          hintText: 'Email Address'
+      ),
       validator: (email) =>
           email != null && email.isNotEmpty ? 'Email is required' : null,
     );
@@ -57,6 +64,9 @@ class _LoginPageState extends State<LoginPage> {
       controller: password,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        hintText: 'Password'
+      ),
       validator: (password) => password != null && password.isNotEmpty
           ? 'Password is required'
           : null,
