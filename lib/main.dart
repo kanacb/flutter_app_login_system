@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:login_system/home/homePage.dart';
 import 'package:login_system/login/loginPage.dart';
 
 Future<void> main() async {
+  await Hive.initFlutter();
   Box<dynamic> settings = await Hive.openBox('settings');
 
   if (settings.isNotEmpty) {
