@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:login_system/home/homePage.dart';
+import 'package:login_system/login/loginPage.dart';
+
+Future<void> main() async {
+  Box<dynamic> settings = await Hive.openBox('settings');
+
+  if (settings.isNotEmpty) {
+    runApp(const MyApp());
+  } else {
+    runApp(const MyLoginApp());
+  }
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: HomePage());
+  }
+}
+
+class MyLoginApp extends StatefulWidget {
+  const MyLoginApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyLoginApp> createState() => _MyLoginAppState();
+}
+
+class _MyLoginAppState extends State<MyLoginApp> {
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: LoginPage());
+  }
+}
+
