@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:login_system/home/homePage.dart';
 import 'package:login_system/login/loginPage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   Box<dynamic> settings = await Hive.openBox('settings');
   print('main function');
   if (settings.isNotEmpty) {
