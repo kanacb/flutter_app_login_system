@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 
 import '../controllers/loginController.dart';
 import '../home/homePage.dart';
-import '../services/loginServices.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -30,17 +29,21 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return loginWidget();
+    return Container();
   }
 
-  Widget loginWidget() {
+  Widget registerWidget() {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login Page"),),
-      body: Center(
+      appBar: AppBar(title: const Text('Registration Page')),
+      body: SafeArea(
         child: Form(
           key: formKey,
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
+              buildFullNameController(),
               const SizedBox(
                 height: 10,
               ),
@@ -60,14 +63,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget buildFullNameController() {
+    return TextFormField(
+      controller: fullName,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(hintText: 'Full Name'),
+      validator: (email) =>
+      email != null && email.isNotEmpty ? 'Full name is required' : null,
+    );
+  }
+
   Widget buildEmailController() {
     return TextFormField(
       controller: email,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-          hintText: 'Email Address'
-      ),
+      decoration: const InputDecoration(hintText: 'Email Address'),
       validator: (email) =>
           email != null && email.isNotEmpty ? 'Email is required' : null,
     );
@@ -78,9 +90,7 @@ class _LoginPageState extends State<LoginPage> {
       controller: password,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        hintText: 'Password'
-      ),
+      decoration: const InputDecoration(hintText: 'Password'),
       validator: (password) => password != null && password.isNotEmpty
           ? 'Password is required'
           : null,
@@ -93,12 +103,13 @@ class _LoginPageState extends State<LoginPage> {
           if (kDebugMode) {
             print('Login Clicked');
           }
-          if(await loginProcess(email.value.text, password.value.text)) {
+          if (await registerProcess(fullName.value.text, email.value.text, password.value.text)) {
             pushToHomePage();
-          }
-          else {
+          } else {
             // show failed to login toast.
-            var snackBar = const SnackBar(content: Text('Invalid Login'),);
+            var snackBar = const SnackBar(
+              content: Text('Invalid Login'),
+            );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         },
@@ -107,4 +118,5 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ));
   }
+
 }

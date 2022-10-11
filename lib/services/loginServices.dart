@@ -1,5 +1,6 @@
 // functions to create in the factory services
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
 
 CollectionReference users = FirebaseFirestore.instance.collection('users');
 
@@ -34,3 +35,9 @@ Future<QuerySnapshot> checkUserAuth(String email, String password) {
       // .catchError((error) => print("Failed to check User Auth: ${error.toString()}"));
 }
 
+void saveUserSettings(String fullName, String email, String password){
+  Box settings = Hive.box('settings');
+  settings.put('fullName', fullName);
+  settings.put('email', email);
+  settings.put('password', password);
+}
